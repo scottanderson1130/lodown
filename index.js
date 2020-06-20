@@ -52,14 +52,15 @@ module.exports.identity = identity;
 module.exports.typeOf = typeOf;
 
 /**
- * first: Will take in an array and return the 1st value of that array
- *  if array is empty, will return an empty array.
- * 
+ * first: Will take in an array and return the 1st n values of that array.
+ *  
  * @param {Array} arr: The array of which to return the frist number of items
  * @param {Number} num: This will determin how many values from the array to return
  * 
  * @return {Array}: Will return the 1st index of an array up to a given ending number. 
- *  if no ending number is given, the array will return the 1st value
+ *  If no ending number is given, the array will return the 1st value. If array is empty, 
+ *  the argument is not an array, or the number is negative, 
+ *  first will return an empty array.
  * 
  */
  function first(arr, num) {
@@ -77,14 +78,15 @@ module.exports.first = first;
 
 /**
  * last: Given an array and a variale count, this will return the ending of an array
- *  based on the amount of variables desired.
+ *  based on the amount of variables desired. 
  * 
  * @param {Array} arr: Given array to extract data from
  * @param {Number} num: The amount of variables desired
  * 
- * @return {Array}: Will an array based off of the given array. This array
+ * @return {Array}: Will return an array based off of the given array. This array
  *  will at minimum be the last index of the array but will include amount 
- *  of variables if given.
+ *  of variables if given. If array is empty, or the argument is not 
+ *  an array, or the number is negative, last will return an empty array.
  * 
  */
  function last(arr, num) {
@@ -164,20 +166,18 @@ module.exports.unique = unique;
  * filter: Given an array and a function. Return the values that will return true
  * 
  * @param {Array} arr: Array of values that will be arguments in the given function
- * @param {Function} func: This function will return a Boolean value on each of the values within the array
- *  Returning a new array based of those values that are true
+ * @param {Function} func: The function will use the value, index and the full collection as the argument
+ *  to return a boolean value.
  * 
- * @return {Array}: Will return a new array of the values from the array that when run through the function
- *  return true
+ * @return {Array}: Will store and return only the values that return true from the function in an array. 
  */
- function filter(arr, func) {
-        const newArr = [];
-        each(arr, (e, i, a) => {
-            if(func(e, i, a)) {
-                newArr.push(e);
-            }})
-
-        return newArr;
+ function filter (arr, func) {
+        const newArr = [];              
+        each(arr, (e, i, a) => {      
+            if(func(e, i, a)) {         
+                newArr.push(e);         
+            }})                         
+        return newArr;                  
     }
 
 module.exports.filter = filter;
@@ -187,9 +187,11 @@ module.exports.filter = filter;
  *  array value as the argument.
  * 
  * @param {Array} arr: Given array to test each value with the given function
- * @param {Function} f: This function will test each value of the array and return a Boolean value
+ * @param {Function} f: The function will use the value, index and the full collection as the argument
+ *  to return a boolean value.
  * 
  * @return {Array}: If the return from the Function is False it will add the array value to a new array
+ *  and return the array.
  */
  function reject(arr,f) {
      const newArr = [];
@@ -211,7 +213,8 @@ module.exports.reject = reject;
  * @param {Function} f: Function that will return truthy and falsy values for each index value of 
  *  the array
  * 
- * @return {Array}: Returns an array containing 2 arrays. 1st Truthy values and 2nd Falsy values
+ * @return {Array}: Returns a single array containing 2 arrays based on the boolean value returned by the function.
+ *  An array for tuthy values and an array for falsey values.
  */
  function partition(arr, f) {
         const arrTruthy = [];
@@ -294,7 +297,8 @@ module.exports.pluck = pluck;
  * @param {Function} func: The function provided will use the individual values from the Array
  *  and/or Object to return a boolean value
  * 
- * @return {Boolean}: Will return a true/false value based on if ALL are true or one is false
+ * @return {Boolean}: Will return a true/false value based on if ALL are true or one is false.
+ *  If no callback is given, every will check the truthy values of each value of the array.
  */
   function every(collection, func) {
     if (func === undefined) {
@@ -325,7 +329,7 @@ module.exports.every = every;
 
 /**
  * some: Return a single boolean value given a collection of data and a function.
- *  If ALL are false, return false. If one is true, return true
+ *  If ALL are false, return false. If one is true, return true. 
  * 
  * @param {Array/Object} collection: Array and Object provided will be used as the arguments
  *  for a given function.
@@ -333,7 +337,9 @@ module.exports.every = every;
  *  a given Array/Object
  * 
  * @return {Boolean}: True or false will be returned. If the function returns ALL false, false 
- *  will be provided. If only one true, true will be returned
+ *  will be provided. If only one true, true will be returned. If no callback is given,
+ *  some will check the falsey values of each value of the array.
+ * 
  */
  function some (collection, func) {
         if (func === undefined) {
@@ -368,10 +374,11 @@ module.exports.some = some;
  * 
  * @param {Array} arr: Given array of values to use as arguements for a desired outcome of a function
  * @param {Function} fn: The function will use the itarative values of a given array
- * @param {Number} seed: The starting value for the function. If no value given, the 
+ * @param {*} seed: The starting value for the function. If no value given, the 
  *  1st value of the array will be used
  * 
- * @return {Number}: Will calulate a single value using the given function and array
+ * @return {*}: Will resolve to a single return of any datatype. Can return a single array of values
+ *  or a single object or any of the simple datatypes.
  */
  function reduce(arr, fn, seed) {
         for (let i = 0; i < arr.length; i++) {

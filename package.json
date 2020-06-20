@@ -1,0 +1,26 @@
+{
+  "name": "lodown-scottanderson",
+  "version": "1.0.0",
+  "description": "my lodown library",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "istanbul cover _mocha -- test/ -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": " "
+  },
+  "author": "Scott Anderson",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "i": "^0.3.6",
+    "istanbul": "^0.4.5",
+    "moca": "^0.4.3",
+    "sinon": "^9.0.2"
+  },
+  "dependencies": {}
+}
